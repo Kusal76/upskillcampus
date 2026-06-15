@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduCore - Premium Student Management Dashboard</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- CSS Stylesheet -->
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="dashboard-wrapper">
+        <!-- Top Navigation Bar -->
+        <nav class="top-nav card">
+            <div class="brand">
+                <svg class="brand-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                </svg>
+                <div class="brand-text">
+                    <h1>EduCore</h1>
+                    <span>Student Analytics Portal</span>
+                </div>
+            </div>
+            <div class="nav-controls">
+                <button id="theme-toggle-btn" class="theme-btn" title="Toggle color theme">
+                    <!-- Sun Icon (shown in dark theme) -->
+                    <svg class="theme-icon sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                    </svg>
+                    <!-- Moon Icon (shown in light theme) -->
+                    <svg class="theme-icon moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                    </svg>
+                </button>
+                <div class="system-status">
+                    <span class="status-indicator"></span>
+                    <span class="status-text">Database Synced</span>
+                </div>
+            </div>
+        </nav>
+
+        <!-- KPI Metrics Ribbon -->
+        <section class="metrics-ribbon">
+            <div class="metric-card card">
+                <div class="metric-icon total">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                    </svg>
+                </div>
+                <div class="metric-info">
+                    <span class="metric-title">Total Enrolled</span>
+                    <span class="metric-value" id="stat-total">0</span>
+                </div>
+            </div>
+            <div class="metric-card card">
+                <div class="metric-icon average">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
+                    </svg>
+                </div>
+                <div class="metric-info">
+                    <span class="metric-title">Class Average</span>
+                    <span class="metric-value" id="stat-avg">0.0%</span>
+                </div>
+            </div>
+            <div class="metric-card card">
+                <div class="metric-icon passing">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+                    </svg>
+                </div>
+                <div class="metric-info">
+                    <span class="metric-title">Passing Rate</span>
+                    <span class="metric-value" id="stat-passing">0%</span>
+                </div>
+            </div>
+            <div class="metric-card card">
+                <div class="metric-icon topper">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/>
+                    </svg>
+                </div>
+                <div class="metric-info">
+                    <span class="metric-title">Top Performer</span>
+                    <span class="metric-value" id="stat-topper">N/A</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Dashboard Workspace Grid -->
+        <main class="dashboard-grid">
+            
+            <!-- Left Workspace: Form & Chart -->
+            <aside class="sidebar-workspace">
+                <!-- Form Card -->
+                <div class="form-container card">
+                    <div class="card-title-header">
+                        <h2 id="form-title">Add Student Record</h2>
+                        <p class="subtitle" id="form-subtitle">Enter credentials to register a student</p>
+                    </div>
+                    <form id="student-form" novalidate>
+                        <!-- Student ID -->
+                        <div class="floating-group">
+                            <label for="student_id"><span class="form-icon">&#127915;</span> Student ID</label>
+                            <input type="text" id="student_id" name="student_id" placeholder="e.g. 104" required autocomplete="off">
+                            <span class="error-msg" id="err-student_id"></span>
+                        </div>
+
+                        <!-- Name -->
+                        <div class="floating-group">
+                            <label for="name"><span class="form-icon">&#128100;</span> Student Name</label>
+                            <input type="text" id="name" name="name" placeholder="e.g. Clara Oswald" required autocomplete="off">
+                            <span class="error-msg" id="err-name"></span>
+                        </div>
+
+                        <div class="split-row">
+                            <!-- Age -->
+                            <div class="floating-group">
+                                <label for="age"><span class="form-icon">&#128198;</span> Age</label>
+                                <input type="number" id="age" name="age" min="1" placeholder="e.g. 21" required>
+                                <span class="error-msg" id="err-age"></span>
+                            </div>
+                            
+                            <!-- Gender -->
+                            <div class="floating-group">
+                                <label for="gender"><span class="form-icon">&#9895;</span> Gender</label>
+                                <select id="gender" name="gender" required>
+                                    <option value="" disabled selected>Select</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                                <span class="error-msg" id="err-gender"></span>
+                            </div>
+                        </div>
+
+                        <div class="split-row">
+                            <!-- Course -->
+                            <div class="floating-group">
+                                <label for="course"><span class="form-icon">&#128214;</span> Course</label>
+                                <input type="text" id="course" name="course" placeholder="e.g. History" required autocomplete="off">
+                                <span class="error-msg" id="err-course"></span>
+                            </div>
+
+                            <!-- Marks -->
+                            <div class="floating-group">
+                                <label for="marks"><span class="form-icon">&#127941;</span> Marks (%)</label>
+                                <input type="number" id="marks" name="marks" min="0" max="100" step="0.1" placeholder="0 - 100" required>
+                                <span class="error-msg" id="err-marks"></span>
+                            </div>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="floating-group">
+                            <label for="email"><span class="form-icon">&#128231;</span> Email Address</label>
+                            <input type="email" id="email" name="email" placeholder="name@domain.com" required autocomplete="off">
+                            <span class="error-msg" id="err-email"></span>
+                        </div>
+
+                        <div class="action-buttons">
+                            <button type="submit" class="btn btn-primary" id="btn-submit">
+                                <span id="submit-text">Register Student</span>
+                            </button>
+                            <button type="button" class="btn btn-secondary" id="btn-reset" style="display: none;">
+                                Cancel Editing
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+            </aside>
+
+            <!-- Right Workspace: Database Grid -->
+            <section class="grid-workspace">
+                <!-- Filters Toolbar -->
+                <div class="toolbar card">
+                    <div class="search-box">
+                        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                        </svg>
+                        <input type="text" id="search-input" placeholder="Search ID, Name, or Course...">
+                        <button id="search-clear-btn" style="display: none;">&times;</button>
+                    </div>
+                    
+                    <div class="filter-controls">
+                        <div class="filter-group">
+                            <label for="filter-course">Course:</label>
+                            <select id="filter-course">
+                                <option value="all">All Courses</option>
+                            </select>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <label>Sort by:</label>
+                            <div class="toggle-buttons">
+                                <button class="toggle-btn active" id="sort-name" data-sort="name">Name</button>
+                                <button class="toggle-btn" id="sort-marks" data-sort="marks">Marks</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-secondary" id="export-csv-btn" title="Download current database as CSV">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+                        </svg>
+                        Export CSV
+                    </button>
+                </div>
+
+                <!-- Students Card List Container -->
+                <div class="students-grid" id="students-container">
+                    <div class="loading-state">
+                        <div class="spinner"></div>
+                        <p>Syncing records with server...</p>
+                    </div>
+                </div>
+
+                <!-- Analytics Row at the bottom of Right Workspace -->
+                <div class="analytics-row">
+                    <!-- Chart Card -->
+                    <div class="chart-container card">
+                        <div class="card-title-header">
+                            <h2>Analytics & Demographics</h2>
+                            <p class="subtitle">Grades analysis and gender statistics</p>
+                        </div>
+                        <div class="charts-row">
+                            <div class="canvas-wrapper">
+                                <canvas id="gradeChart"></canvas>
+                            </div>
+                            <div class="canvas-wrapper">
+                                <canvas id="genderChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Course Performance Metrics Card -->
+                    <div class="course-metrics-container card">
+                        <div class="card-title-header">
+                            <h2>Course Performance</h2>
+                            <p class="subtitle">Enrollment size and average grades</p>
+                        </div>
+                        <div class="course-stats-list" id="course-stats-list">
+                            <div class="loading-state-mini">Loading course data...</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Custom Dialog Modal (Replaces Browser Confirm) -->
+    <div id="confirm-modal" class="modal-overlay">
+        <div class="modal card">
+            <div class="modal-header">
+                <div class="warning-icon-wrapper">
+                    <svg class="warning-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+                    </svg>
+                </div>
+                <h3>Confirm Deletion</h3>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete <strong id="delete-student-name"></strong>?</p>
+                <p class="modal-alert-text">This action will remove the record permanently from the JSON database.</p>
+            </div>
+            <div class="modal-actions">
+                <button id="modal-cancel-btn" class="btn btn-secondary">Cancel</button>
+                <button id="modal-confirm-btn" class="btn btn-danger">Confirm Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toaster -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Script Entry Point -->
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

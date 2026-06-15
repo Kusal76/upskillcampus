@@ -1,0 +1,38 @@
+[
+    {
+        "student_id": "1",
+        "name": "Rahul Das",
+        "age": 21,
+        "gender": "Male",
+        "course": "CSE",
+        "marks": 80.0,
+        "email": "rahul123@gmail.com"
+    },
+    {
+        "student_id": "103",
+        "name": "Bob Johnson",
+        "age": 19,
+        "gender": "Male",
+        "course": "Physics",
+        "marks": 72.3,
+        "email": "bob@example.com"
+    },
+    {
+        "student_id": "STU123",
+        "name": "Sagnik Biswas",
+        "age": 21,
+        "gender": "Male",
+        "course": "IT",
+        "marks": 80.0,
+        "email": "sagnik123@gmail.com"
+    },
+    {
+        "student_id": "108",
+        "name": "Sonia Kumari",
+        "age": 21,
+        "gender": "Female",
+        "course": "CSE",
+        "marks": 70.0,
+        "email": "sonia123@gmail.com"
+    }
+]
